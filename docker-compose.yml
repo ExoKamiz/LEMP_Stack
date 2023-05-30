@@ -1,0 +1,42 @@
+version: '3'
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    ports:
+      - '6666:80'  # Map port 80 of Nginx container to port 6666 on localhost
+    networks:
+      - backend
+      - frontend
+
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile.php
+    image: php:8.2-fpm
+    networks:
+      - backend
+
+  mysql:
+    build:
+      context: .
+      dockerfile: Dockerfile.mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root_password
+      - MYSQL_DATABASE=test_database1
+    networks:
+      - backend
+
+  phpmyadmin:
+    build:
+      context: .
+      dockerfile: Dockerfile.phpmyadmin
+    ports:
+      - '6001:80'  # Map port 80 of phpMyAdmin container to port 6001 on localhost
+    networks:
+      - backend
+
+networks:
+  backend:
+  frontend:

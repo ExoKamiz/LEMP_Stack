@@ -1,0 +1,4 @@
+FROM phpmyadmin/phpmyadmin:latest
+
+# Set environment variable for the MySQL host
+ENV PMA_HOST=mysql
